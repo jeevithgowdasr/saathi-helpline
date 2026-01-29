@@ -1,0 +1,43 @@
+services:
+  # 1. Node.js Backend
+  - type: web
+    name: saathi-backend
+    env: node
+    cd: saathi-backend
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: PORT
+        value: 5000
+
+  # 2. Python ML Backend
+  - type: web
+    name: saathi-ml-engine
+    env: python
+    buildCommand: pip install -r ml_engine/requirements.txt
+    startCommand: gunicorn --chdir ml_engine api:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: PORT
+        value: 5001
+
+  # 3. React Frontend
+  - type: web
+    name: saathi-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./build
+    envVars:
+      - key: REACT_APP_NODE_API_URL
+        fromService:
+          type: web
+          name: saathi-backend
+          property: url
+      - key: REACT_APP_ML_API_URL
+        fromService:
+          type: web
+          name: saathi-ml-engine
+          property: url
