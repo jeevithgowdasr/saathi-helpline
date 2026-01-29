@@ -3,7 +3,7 @@ services:
   - type: web
     name: saathi-backend
     env: node
-    cd: saathi-backend
+    rootDir: saathi-backend
     buildCommand: npm install
     startCommand: node server.js
     envVars:
