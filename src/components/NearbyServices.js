@@ -40,8 +40,20 @@ export function NearbyServices() {
 
             if (!response.ok) throw new Error("Failed to fetch nearby services");
 
-            const data = await response.json();
-            setServices(data);
+            const geojson = await response.json();
+
+            // Parse GeoJSON FeatureCollection to the format the UI expects
+            const servicesArray = geojson.features.map(f => ({
+                type: f.properties.type,
+                name: f.properties.name,
+                coordinates: { lat: f.geometry.coordinates[1], lon: f.geometry.coordinates[0] },
+                distance_km: f.properties.distance_km,
+                rating: f.properties.rating,
+                availability_status: f.properties.availability,
+                eta_minutes: f.properties.eta_minutes
+            }));
+
+            setServices(servicesArray);
             setLoading(false);
         } catch (err) {
             console.error(err);
@@ -85,15 +97,15 @@ export function NearbyServices() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {services && Object.entries(services).map(([type, data]) => (
-                    <div key={type} className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow relative overflow-hidden group">
+                {services && services.map((data, index) => (
+                    <div key={index} className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-lg border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-shadow relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity text-6xl transform translate-x-2 -translate-y-2">
-                            {getIcon(type)}
+                            {getIcon(data.type)}
                         </div>
 
                         <div className="flex items-start justify-between mb-3">
                             <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-2xl">
-                                {getIcon(type)}
+                                {getIcon(data.type)}
                             </div>
                             <div className={`px-3 py-1 rounded-full text-xs font-bold ${data.availability_status === 'Open Now' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                                 {data.availability_status}

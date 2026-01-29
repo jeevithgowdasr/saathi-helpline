@@ -5,7 +5,7 @@ export const allHelplines = [
     { key: "child", number: "1098", category: "Child", image: "/icons/child.png", website: "https://dwcd.karnataka.gov.in/page/Contact+us/Santhwana+Centres/en" },
     { key: "senior", number: "14567", category: "Senior", image: "/icons/senior.png", website: "https://www.indiacustomercare.com/government-karnataka-contact-numbers" },
     { key: "cyber", number: "1930", category: "Cyber", image: "/icons/cyber.png", website: "https://mysore.nic.in/en/public-utility-category/police-station/page/2/" },
-    { key: "hospital", number: "102", category: "Hospital", image: "/icons/hospital.png", website: "https://www.inmysore.com/mysore-emergency-numbers" },
+    { key: "hospital", number: "102", category: "Hospital", image: "/icons/hospital.png", website: "https://www.apollohospitals.com/" },
     { key: "emergency", number: "112", category: "Emergency", image: "/icons/emergency.png", website: "https://mysore.nic.in/en/department/emergency-helplines/" },
     { key: "fire", number: "101", category: "Fire", image: "/icons/fire.png", website: "https://indianhelpline.com/karnataka" }
 ];

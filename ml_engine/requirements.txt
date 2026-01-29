@@ -9,3 +9,11 @@ SpeechRecognition
 pydub
 better_profanity
 edge-tts
+transformers
+faster-whisper
+noisereduce
+scikit-learn
+scipy
+gunicorn
+python-dotenv
+asyncio
